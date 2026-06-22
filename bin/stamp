@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+// stamp launcher — resolves the compiled CLI and runs it. This file is ESM (the package
+// is "type":"module"), so it uses import.meta.url to locate the build, then dynamic
+// import() to load it. Run `pnpm build` first (produces dist/cli/index.js); the
+// acceptance test always builds before invoking.
+import { dirname, join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+
+const binDir = dirname(fileURLToPath(import.meta.url));
+const entry = join(binDir, "..", "dist", "cli", "index.js");
+
+import(pathToFileURL(entry).href)
+  .then((mod) => mod.main(process.argv))
+  .catch((err) => {
+    const msg = err && err.message ? err.message : String(err);
+    process.stderr.write("stamp: failed to launch — " + msg + "\n");
+    process.stderr.write("stamp: did you run `pnpm build`? (expected " + entry + ")\n");
+    process.exit(1);
+  });

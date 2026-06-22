@@ -1,0 +1,16 @@
+{
+  "name": "app-under-audit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Synthetic Next/Node app used as the deterministic target for stamp's acceptance test. A working app with sign-in and basic logging, pre-first-audit. Not a real app, no live secrets, no real PII.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

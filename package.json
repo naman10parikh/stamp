@@ -1,0 +1,50 @@
+{
+  "name": "stamp",
+  "version": "0.1.0",
+  "description": "stamp — the compliance / enterprise-readiness employee. Audit-ready evidence, assembled and proven — never a rubber stamp.",
+  "type": "module",
+  "bin": {
+    "stamp": "./bin/stamp"
+  },
+  "main": "./dist/cli/index.js",
+  "types": "./dist/cli/index.d.ts",
+  "files": [
+    "dist/",
+    "bin/",
+    "brain/",
+    "skills/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "eval": "node eval/run.mjs",
+    "acceptance": "node scripts/acceptance.mjs"
+  },
+  "keywords": [
+    "compliance",
+    "soc2",
+    "gdpr",
+    "sso",
+    "scim",
+    "audit",
+    "grc",
+    "claude",
+    "agent",
+    "energy"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
