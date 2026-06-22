@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>stamp — cockpit</title>
+    <!-- Energy design: Instrument Serif (display) + Poppins (body). Loaded from Google Fonts;
+         degrades to the local serif/sans stacks in styles.css if offline. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <span class="brand">stamp<span class="dot">.</span></span>
+      <span class="tagline">audit-ready evidence, assembled and proven — never a rubber stamp</span>
+      <span class="powered">powered by Energy</span>
+    </header>
+
+    <!-- stamp's defining creed, on every view (the JTBD-0 boundary one-liner) -->
+    <div class="boundary">
+      <b>badge</b> = the connection &nbsp;·&nbsp; <b>stamp</b> = the program that decides we need it and proves it
+      to the auditor
+    </div>
+
+    <nav id="nav">
+      <button data-view="brain" class="active">Brain browser</button>
+      <button data-view="runs">Run log</button>
+      <button data-view="evals">Eval scores</button>
+      <button data-view="ask">Ask the employee</button>
+    </nav>
+
+    <main>
+      <!-- ── view: brain browser ─────────────────────────────────────────────────── -->
+      <section id="view-brain" class="view">
+        <h2 class="view-title">Brain browser</h2>
+        <p class="view-sub">
+          stamp's queryable memory layer — the 6 expertise files, with BM25 search returning ranked, cited hits.
+        </p>
+        <div class="search-row">
+          <input type="text" id="brain-q" placeholder="search the brain — e.g. tamper-evident audit trail" />
+          <button class="go" id="brain-search-btn">Search</button>
+        </div>
+        <div id="brain-results"></div>
+        <div class="brain-grid">
+          <div class="brain-list" id="brain-list"><span class="loading">loading brain files…</span></div>
+          <div class="brain-content" id="brain-content"><span class="muted">Select a brain file to read it.</span></div>
+        </div>
+      </section>
+
+      <!-- ── view: run log ───────────────────────────────────────────────────────── -->
+      <section id="view-runs" class="view hidden">
+        <h2 class="view-title">Run log</h2>
+        <p class="view-sub">
+          Every <code class="mono">stamp</code> invocation + RSI cycle — with the
+          <span class="amber">human_owner</span> (stamp dogfooding its own accountable-human audit-trail rule).
+        </p>
+        <div class="stat-row" id="runs-stats"></div>
+        <div class="card">
+          <table>
+            <thead>
+              <tr>
+                <th>time</th>
+                <th>cmd</th>
+                <th>jtbd</th>
+                <th>model</th>
+                <th>ms</th>
+                <th>outcome</th>
+                <th>human_owner</th>
+              </tr>
+            </thead>
+            <tbody id="runs-tbody">
+              <tr><td colspan="7" class="loading">loading run log…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ── view: eval scores ───────────────────────────────────────────────────── -->
+      <section id="view-evals" class="view hidden">
+        <h2 class="view-title">Eval scores</h2>
+        <p class="view-sub">
+          The eval pyramid — L1 structural + the 15 golden tasks (F1 ≥ 0.8, no self-grading) + the CI gate.
+        </p>
+        <div id="evals-body"><span class="loading">running the eval pyramid (builds first, ~3s)…</span></div>
+      </section>
+
+      <!-- ── view: ask the employee ──────────────────────────────────────────────── -->
+      <section id="view-ask" class="view hidden">
+        <h2 class="view-title">Ask the employee</h2>
+        <p class="view-sub">
+          stamp talking — runs the real CLI under the hood. It <b>never says "compliant"</b> and visibly
+          <b>hands the mechanism to badge</b>.
+        </p>
+        <div class="ask-controls">
+          <select id="ask-verb">
+            <option value="audit">audit — SOC 2 readiness gap report</option>
+            <option value="sso-plan">sso-plan — enterprise-SSO program plan</option>
+            <option value="advise">advise — a decision with the honest cost</option>
+          </select>
+          <span id="ask-extra"></span>
+          <button class="go" id="ask-btn">Ask</button>
+        </div>
+        <div id="ask-answer" class="answer"><span class="muted">Pick a question and ask.</span></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
