@@ -1,0 +1,171 @@
+{
+  "_comment": "The 15 golden tasks for stamp's eval pyramid (PLAN §6; brain/BATTLE-TESTED-SCENARIOS.md S1-S16). EXTERNAL grading key — no self-grading: the grader runs each task's deterministic handler and matches the OUTPUT against required_phrases drawn from the BTS *Resolution* text + forbidden_phrases (the boundary-FAIL words). A task passes iff F1(required_phrases) >= 0.8 AND no forbidden_phrase is present. ci_block marks the CI-blocking subset (G1-G9, G11, G12, G13).",
+  "f1_threshold": 0.8,
+  "tasks": [
+    {
+      "id": "G1",
+      "bts": "S-acceptance",
+      "level": "L2",
+      "ci_block": true,
+      "task": "Acceptance: gap-scan the fixture app for SOC2 readiness.",
+      "handler": "audit",
+      "args": { "path": "test/fixtures/app-under-audit", "framework": "soc2" },
+      "required_phrases": ["CC7.2", "CC6.3", "audit-ready evidence", "severity"],
+      "forbidden_phrases": ["\"compliant\""]
+    },
+    {
+      "id": "G2",
+      "bts": "S3",
+      "level": "L2",
+      "ci_block": true,
+      "task": "Acceptance: at $300k ACV, do we build the enterprise-SSO program now?",
+      "handler": "sso-plan",
+      "args": { "acv": 300000, "dryRun": true },
+      "required_phrases": ["build now", "deal-blocker", "SCIM", "deprovision", "badge init --provider workos"],
+      "forbidden_phrases": ["ACS", "SAMLResponse", "samlp:", "<saml", "new SAML"]
+    },
+    {
+      "id": "G3",
+      "bts": "S5",
+      "level": "L1",
+      "ci_block": true,
+      "task": "We have logs (stdout -> aggregator) for CC7 — is that the audit trail?",
+      "handler": "audit-log",
+      "args": { "mode": "design" },
+      "required_phrases": ["tamper-EVIDENT", "append-only", "identity-traceable", "hash", "SIEM", "retention"],
+      "forbidden_phrases": ["increase retention", "just add more logs"]
+    },
+    {
+      "id": "G4",
+      "bts": "S6",
+      "level": "L3",
+      "ci_block": true,
+      "task": "An agent flipped a prod config; the auditor asks who authorized it.",
+      "handler": "audit-log",
+      "args": { "mode": "design" },
+      "required_phrases": ["human_owner", "agent_id", "scopes", "tenant", "task_id", "intersection"],
+      "forbidden_phrases": ["the agent is the actor", "add the agent to the actor list"]
+    },
+    {
+      "id": "G5",
+      "bts": "S7",
+      "level": "L2",
+      "ci_block": true,
+      "task": "Our quarterly access review passed (all humans) — are we covered?",
+      "handler": "access-review",
+      "args": { "scope": "agents", "scim": false },
+      "required_phrases": ["service account", "API key", "agent identit", "badge token scopes", "MONTHLY"],
+      "forbidden_phrases": ["only interactive humans", "humans are enough"]
+    },
+    {
+      "id": "G6",
+      "bts": "S8",
+      "level": "L3",
+      "ci_block": true,
+      "task": "Auto-revoke a stale-looking grant during the review?",
+      "handler": "access-review",
+      "args": { "scope": "privileged", "scim": false },
+      "required_phrases": ["PROPOSES", "human", "approv", "change-management"],
+      "forbidden_phrases": ["auto-revoke", "automatically revoke", "revoke it automatically"]
+    },
+    {
+      "id": "G7",
+      "bts": "S9",
+      "level": "L3",
+      "ci_block": true,
+      "task": "We pinned Postgres to eu-central-1 — can we tell the buyer 'EU residency'?",
+      "handler": "residency",
+      "args": { "mode": "ask" },
+      "required_phrases": ["backups", "audit log", "LLM inference call", "tax", "subprocessor", "CDN", "guardrail"],
+      "forbidden_phrases": ["yes, just the database", "pinning the DB is enough"]
+    },
+    {
+      "id": "G8",
+      "bts": "S10",
+      "level": "L2",
+      "ci_block": true,
+      "task": "Buyer asks 'EU residency?' — deal still died in security review. Why?",
+      "handler": "residency",
+      "args": { "mode": "ask" },
+      "required_phrases": ["sovereignty", "CLOUD Act", "BYOK", "residency or sovereignty"],
+      "forbidden_phrases": ["residency and sovereignty are the same"]
+    },
+    {
+      "id": "G9",
+      "bts": "S11",
+      "level": "L3",
+      "ci_block": true,
+      "task": "GDPR erasure DSAR arrived; data scattered across subprocessors.",
+      "handler": "dsar",
+      "args": { "type": "erasure" },
+      "required_phrases": ["1 month", "extendable to 3", "subprocessor register", "exemption", "human SIGNS"],
+      "forbidden_phrases": ["auto-erase", "delete everything automatically"]
+    },
+    {
+      "id": "G11",
+      "bts": "S13",
+      "level": "L2",
+      "ci_block": true,
+      "task": "We ran an AI red-team — covered for the SOC 2 pen-test?",
+      "handler": "advise",
+      "args": { "on": "pentest" },
+      "required_phrases": ["HUMAN-LED", "reject", "AI", "Cobalt", "CPTaaS"],
+      "forbidden_phrases": ["AI-pentest is sufficient", "AI red-team covers"]
+    },
+    {
+      "id": "G12",
+      "bts": "S14",
+      "level": "L3",
+      "ci_block": true,
+      "task": "Same 300-Q SIG/CAIQ blocks every deal; we re-answer each time.",
+      "handler": "questionnaire",
+      "args": { "format": "caiq" },
+      "required_phrases": ["Trust Center", "answer-KB", "versioned", "DRAFT", "human", "sign"],
+      "forbidden_phrases": ["I'll answer the 300", "ship AI prose blind"]
+    },
+    {
+      "id": "G13",
+      "bts": "S15",
+      "level": "L3",
+      "ci_block": true,
+      "task": "A departed employee still has access — SCIM drift.",
+      "handler": "access-review",
+      "args": { "scope": "agents", "scim": true },
+      "required_phrases": ["reconciliation", "deprovisioning", "timestamp", "badge", "ghost"],
+      "forbidden_phrases": ["fix the SCIM pipe", "stamp fixes the webhook"]
+    },
+    {
+      "id": "G10",
+      "bts": "S12",
+      "level": "L2",
+      "ci_block": false,
+      "task": "We rely only on the EU-US DPF — a Schrems-III appeal surfaced.",
+      "handler": "advise",
+      "args": { "on": "privacy" },
+      "required_phrases": ["SCC", "Transfer Impact Assessment", "DPF", "Safe Harbor", "Privacy Shield"],
+      "forbidden_phrases": ["the DPF alone is enough", "rely on the DPF only"]
+    },
+    {
+      "id": "G14",
+      "bts": "S16",
+      "level": "L2",
+      "ci_block": false,
+      "task": "Picking SafeBase as a 'neutral' Trust Center + cloning strongdm/comply.",
+      "handler": "advise",
+      "args": { "on": "repos" },
+      "required_phrases": ["pushed_at", "strongdm/comply", "2022-07-21", "trycompai/comp", "independence"],
+      "forbidden_phrases": ["pick by star count", "stars mean it's current"]
+    },
+    {
+      "id": "G15",
+      "bts": "S1",
+      "level": "L2",
+      "ci_block": false,
+      "task": "Vanta OAuth fails with unhandled_oauth2_cc_error (empty body); nightly pulls run in parallel.",
+      "handler": "advise",
+      "args": { "on": "grc-platform" },
+      "required_phrases": ["Vanta"],
+      "forbidden_phrases": ["just retry the request"]
+    }
+  ]
+}
