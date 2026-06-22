@@ -1,7 +1,14 @@
 name: stamp RSI
-# CP123: dispatch-only until the RSI engine (workflows/rsi.workflow.js + eval gate) is built in Wave B/E.
-# The Claude half additionally needs CLAUDE_CODE_OAUTH_TOKEN (chairman checklist, D8). Guarded = always green.
+# CP123 D2: the nightly RSI watch on the compliance changelog — Vanta/Drata MCP changelogs, the
+# SafeBase-style M&A watch, framework revisions, the NangoHQ/nango #6416 bug status (TM watchlist).
+# The deterministic engine (workflows/rsi.workflow.js + eval gate) lands in cluster E; the run step
+# below is gated on its presence so this workflow stays green until then. The Claude half additionally
+# needs CLAUDE_CODE_OAUTH_TOKEN (chairman checklist, D8) — its absence is NOT a gap; the deterministic
+# half runs $0/tokenless.
 on:
+  schedule:
+    # 07:17 UTC nightly (~00:17 PT) — offset from the top of the hour to dodge GH scheduler congestion.
+    - cron: "17 7 * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,4 +24,9 @@ jobs:
           if [ ! -f workflows/rsi.workflow.js ]; then
             echo "RSI engine not built yet (CP123 cluster E) — exiting green."; exit 0
           fi
-          echo "engine present — deterministic half would run here (wired in cluster E)"
+          echo "engine present — deterministic RSI half runs in the next step"
+      - name: Run deterministic RSI engine
+        # refresh-brain -> re-verify-tool-matrix -> run-eval-pyramid -> propose -> test-gate -> commit
+        # ($0, tokenless). Skipped until cluster E builds the engine — keeps this workflow green (D8).
+        if: hashFiles('workflows/rsi.workflow.js') != ''
+        run: node workflows/rsi.workflow.js --dry-run
