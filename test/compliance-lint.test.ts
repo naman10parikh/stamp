@@ -44,7 +44,9 @@ describe("compliance-lint — all four violation classes FIRE", () => {
   });
 
   it("a secret committed to git → block", () => {
-    const { code } = lint("ANTHROPIC_API_KEY=sk-ant-api03-AbCdEfGhIjKlMnOpQrStUv\n");
+    // The string below is a planted dummy fixture (not a real key) — the inline marker keeps
+    // the repo CI secret-scan from flagging this test line while the hook still must detect it.
+    const { code } = lint("ANTHROPIC_API_KEY=sk-ant-api03-AbCdEfGhIjKlMnOpQrStUv\n"); // dummy fixture, not a real secret
     expect(code).not.toBe(0);
   });
 });
