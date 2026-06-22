@@ -1,0 +1,107 @@
+{
+  "protocolVersion": "1.0",
+  "name": "stamp",
+  "description": "The Energy fleet's compliance / enterprise-readiness domain-expert employee — the governance & evidence half of B2B trust. stamp gap-scans an app for SOC2/ISO27001/HIPAA audit-readiness (a control-mapped gap report, never 'we're compliant' — only 'audit-ready evidence'), plans the enterprise-SSO program (buyer-readiness checklist + WorkOS wiring + deprovisioning-proof spec) and hands the SAML/OIDC+SCIM mechanism to badge, designs the tamper-evident audit-trail-as-a-CONTROL, runs access-reviews scoped to agent identities (PROPOSE revokes, never auto-revoke), proves whole-pipeline data residency, automates DSARs on the GDPR/CCPA clock, and answers SIG/CAIQ/VSA from a versioned KB (AI drafts, a human signs). Boundary: governance/evidence ONLY — the auth mechanism is badge. Tagline: Audit-ready evidence, assembled and proven — never a rubber stamp, never 'we're compliant.' Powered by Energy.",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/naman10parikh/stamp/blob/main/AGENTS.md",
+  "provider": {
+    "organization": "Energy",
+    "url": "https://github.com/naman10parikh/stamp"
+  },
+  "preferredTransport": "stdio",
+  "url": "stdio://stamp",
+  "endpoint": "stdio:node dist/mcp/server.js",
+  "additionalInterfaces": [
+    {
+      "transport": "cli",
+      "url": "node bin/stamp <capability> [args] --json",
+      "note": "stamp is a stdio-local tool-employee for C2 (no hosted endpoint — HARNESS-OVERRIDES §7). Every capability round-trips through the local CLI (`node bin/stamp ...`) or the stdio MCP server. The acceptance bar (audit gap-report + sso-plan dry-run) is fixture-driven and runs $0/no-creds."
+    },
+    {
+      "transport": "mcp-stdio",
+      "url": "node dist/mcp/server.js",
+      "note": "JSON-RPC over stdio; tools/list returns stamp_audit, stamp_sso_plan, stamp_audit_log, stamp_access_review, stamp_residency, stamp_dsar, stamp_questionnaire, stamp_advise. Resources: stamp://brain/* (the 6 read-only expertise files)."
+    }
+  ],
+  "capabilities": ["audit", "sso-plan", "audit-log", "access-review", "residency", "dsar", "questionnaire", "advise"],
+  "streaming": false,
+  "pushNotifications": false,
+  "stateTransitionHistory": false,
+  "defaultInputModes": ["text/plain", "application/json"],
+  "defaultOutputModes": ["application/json", "text/plain"],
+  "boundaryInvariant": "stamp owns governance/evidence; the auth mechanism (SAML/OIDC+SCIM code, signature validation, event ordering, provider $-breakpoints) is badge's. sso-plan emits the program plan + a `badge init --provider workos` handoff, never generated SAML code (OP O2 / KP P25). No surface claims 'compliant' before a CPA firm signs (OP O24); access-review PROPOSES revokes, never auto-revokes (OP O19).",
+  "skills": [
+    {
+      "id": "audit",
+      "name": "SOC2-readiness gap scan",
+      "description": "Gap-scan a target app/repo against the SOC2 control checklist + the brain → { framework, findings:[{ control, severity, evidence_gap, fix, brain_cite }], readiness_summary }. The summary says 'audit-ready evidence: N gaps' and NEVER the word 'compliant' (OP O24 / KP P7). THE acceptance test (half 1).",
+      "tags": ["compliance", "soc2", "iso27001", "hipaa", "gap-scan", "audit-readiness"],
+      "cli": "node bin/stamp audit <app|path> --framework soc2 --json",
+      "mcpTool": "stamp_audit",
+      "examples": ["Will we pass SOC 2? Which controls fail?", "Gap-scan this repo for audit-readiness."]
+    },
+    {
+      "id": "sso-plan",
+      "name": "Enterprise-SSO program plan",
+      "description": "Emit the enterprise-SSO PROGRAM plan → { trigger_decision, buyer_readiness_checklist, workos_wiring_plan, deprovisioning_proof_spec, badge_handoff:'badge init --provider workos' }. At ~$200k ACV → 'build now — deal-blocker'. EMITS NO SAML/OIDC+SCIM code — that is badge's mechanism (OP O2 / KP P25). THE acceptance test (half 2).",
+      "tags": ["compliance", "enterprise-sso", "scim", "deprovisioning", "workos", "badge-handoff"],
+      "cli": "node bin/stamp sso-plan --target <app> --acv 300000 --dry-run --json",
+      "mcpTool": "stamp_sso_plan",
+      "examples": ["Do we need SSO to close this $300k deal?", "Plan enterprise SSO + SCIM deprovisioning for this app."]
+    },
+    {
+      "id": "audit-log",
+      "name": "Audit trail as a control",
+      "description": "Design/check the tamper-evident OTel-span trail (actor/target/before_hash/after_hash/trace_id, hash-chained, signed, SIEM-export) → the span schema + the 4 properties (tamper-EVIDENT > tamper-resistant; accountable-human attribution). 'We have logs' is NOT an audit trail (OP O8/O9).",
+      "tags": ["compliance", "audit-log", "tamper-evident", "cc7", "siem"],
+      "cli": "node bin/stamp audit-log --design --json",
+      "mcpTool": "stamp_audit_log",
+      "examples": ["Is our logging audit-ready for CC7?", "Design a tamper-evident audit trail for agent actions."]
+    },
+    {
+      "id": "access-review",
+      "name": "User access review (UAR)",
+      "description": "Run a UAR scoped to non-human + AGENT identities (inventory derived from badge token scopes) → { inventory, proposed_revokes, requires_human_approval:true }. PROPOSES revokes for a human to approve — NEVER auto-revokes (OP O19 / KP P6); --scim adds IdP↔app reconciliation.",
+      "tags": ["compliance", "access-review", "uar", "agent-identity", "cc6"],
+      "cli": "node bin/stamp access-review --scope agents --scim --json",
+      "mcpTool": "stamp_access_review",
+      "examples": ["Our quarterly access review passed for all humans — are we covered?", "Review agent and service-account access."]
+    },
+    {
+      "id": "residency",
+      "name": "Data residency vs sovereignty proof",
+      "description": "Ask 'residency or sovereignty?' first, then enumerate the WHOLE pipeline (DB+backups+logs+CDN+subprocessors+LLM-call+tax-data) + the BYOK/CMK lever → { question, pipeline_pins, byok_lever, gaps }. Pinning one DB to a region is NOT 'EU residency' (OP O11/O12).",
+      "tags": ["compliance", "residency", "sovereignty", "byok", "gdpr"],
+      "cli": "node bin/stamp residency --ask --json",
+      "mcpTool": "stamp_residency",
+      "examples": ["We pinned Postgres to eu-central-1 — can we tell the buyer 'EU residency'?", "Check our residency posture."]
+    },
+    {
+      "id": "dsar",
+      "name": "DSAR handler",
+      "description": "Classify → verify → apply-exemptions → draft → route a DSAR across the subprocessor register on the GDPR 1-month→3 / CCPA 45-day→90 clock → { clock, classification, exemptions, draft, subprocessor_routes, requires_human_signature:true }. A human SIGNS; never auto-erase (OP O13).",
+      "tags": ["compliance", "gdpr", "ccpa", "dsar", "erasure", "privacy"],
+      "cli": "node bin/stamp dsar --type erasure --json",
+      "mcpTool": "stamp_dsar",
+      "examples": ["A GDPR erasure DSAR arrived; data is scattered across subprocessors.", "Handle this CCPA access request."]
+    },
+    {
+      "id": "questionnaire",
+      "name": "Security questionnaire from a KB",
+      "description": "Draft SIG/CAIQ/VSA answers mapped to a versioned answer-KB → { answers:[{ q, draft_answer, kb_source }], signature_required:true }. Each answer is marked 'DRAFT — human must sign' (OP O22); pair with a Trust Center to deflect (OP O21).",
+      "tags": ["compliance", "questionnaire", "sig", "caiq", "vsa", "trust-center"],
+      "cli": "node bin/stamp questionnaire caiq --kb ./kb --json",
+      "mcpTool": "stamp_questionnaire",
+      "examples": ["The same 300-question SIG blocks every deal; we re-answer each time.", "Draft CAIQ answers from our KB."]
+    },
+    {
+      "id": "advise",
+      "name": "Compliance decision with honest cost",
+      "description": "A DECISION (grc-platform | privacy | pentest | residency | repos) with the honest cost → { recommendation, honest_cost, caveat:'directional — re-verify', boundary_note? }. Vanta default; vet the auditor; verify vendor independence; check pushed_at not stars; NEVER bless an AI-only pen-test (OP O5/O6/O7/O20/O25).",
+      "tags": ["compliance", "advise", "grc-platform", "pentest", "decision"],
+      "cli": "node bin/stamp advise --on grc-platform --json",
+      "mcpTool": "stamp_advise",
+      "examples": ["Which GRC platform should we use for our first SOC 2?", "We ran an AI red-team — are we covered for the pen-test?"]
+    }
+  ]
+}

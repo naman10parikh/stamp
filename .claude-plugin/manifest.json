@@ -1,0 +1,95 @@
+{
+  "name": "stamp",
+  "version": "0.1.0",
+  "description": "The Energy fleet's compliance / enterprise-readiness domain-expert employee as one installable Claude Code plugin: bundles the `stamp` CLI, the `stamp` stdio MCP server, the five compliance skills, the compliance-lint hook, and the two sub-agent personas. Install to gap-scan an app for SOC2/ISO27001/HIPAA audit-readiness, plan the enterprise-SSO program (and hand the SAML/SCIM mechanism to badge), design a tamper-evident audit trail, scope access-reviews to agent identities, prove whole-pipeline residency, automate DSARs, and answer SIG/CAIQ from a versioned KB — always 'audit-ready evidence', never 'we're compliant'. Boundary: governance/evidence ONLY — the auth mechanism is badge. Powered by Energy.",
+  "author": {
+    "name": "Energy fleet",
+    "url": "https://github.com/naman10parikh/stamp"
+  },
+  "homepage": "https://github.com/naman10parikh/stamp/blob/main/AGENTS.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/naman10parikh/stamp.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "compliance",
+    "soc2",
+    "iso27001",
+    "hipaa",
+    "gdpr",
+    "enterprise-sso",
+    "scim",
+    "audit-log",
+    "data-residency",
+    "vanta",
+    "drata",
+    "workos",
+    "mcp",
+    "harness",
+    "agent-native",
+    "energy"
+  ],
+  "bin": {
+    "stamp": "./bin/stamp"
+  },
+  "skills": "./skills",
+  "agents": "./.claude/agents",
+  "hooks": "./.claude/settings.json",
+  "mcpServers": "./.mcp.json",
+  "bundles": {
+    "cli": {
+      "name": "stamp",
+      "bin": "./bin/stamp",
+      "commands": [
+        "audit",
+        "sso-plan",
+        "audit-log",
+        "access-review",
+        "residency",
+        "dsar",
+        "questionnaire",
+        "advise",
+        "runs"
+      ]
+    },
+    "mcpServer": {
+      "name": "stamp",
+      "id": "stamp-mcp",
+      "transport": "stdio",
+      "command": "node dist/mcp/server.js",
+      "tools": [
+        "stamp_audit",
+        "stamp_sso_plan",
+        "stamp_audit_log",
+        "stamp_access_review",
+        "stamp_residency",
+        "stamp_dsar",
+        "stamp_questionnaire",
+        "stamp_advise"
+      ],
+      "resources": ["stamp://brain/*"],
+      "config": "./.mcp.json"
+    },
+    "skills": [
+      "./skills/soc2-readiness-audit/SKILL.md",
+      "./skills/enterprise-sso-program/SKILL.md",
+      "./skills/audit-trail-as-control/SKILL.md",
+      "./skills/privacy-dsar-handler/SKILL.md",
+      "./skills/questionnaire-from-kb/SKILL.md"
+    ],
+    "hook": {
+      "name": "compliance-lint",
+      "event": "PreToolUse",
+      "matcher": "Write|Edit|MultiEdit",
+      "path": "./.claude/hooks/compliance-lint.js",
+      "description": "Parse-time block of stamp's own anti-slop violations in staged output: a 'we are SOC 2 compliant' claim before a CPA signs (OP O24 / KP P7), an 'AI-pentest covers us' claim (OP O20 / KP P18), an auto-revoke without a human gate (OP O19 / KP P6), and a secret committed to git. An isRejecting() guard lets stamp's own forbidding prose (brain/skills that NAME the anti-pattern only to refuse it) pass clean."
+    },
+    "agents": [
+      "./.claude/agents/stamp-soc2-gap-auditor.md",
+      "./.claude/agents/stamp-dsar-handler.md"
+    ]
+  },
+  "install_instructions": "1. Install deps + build: pnpm install --frozen-lockfile && pnpm build (so dist/mcp/server.js exists).  2. Add this plugin to Claude Code: Settings → Plugins → Add local plugin → select the stamp repo root.  3. The stamp CLI (`stamp --help`), the 8 MCP tools (stamp_audit / stamp_sso_plan / …), the 5 skills, the 2 sub-agent personas (stamp-soc2-gap-auditor, stamp-dsar-handler), and the compliance-lint hook are now available; the stamp MCP server is wired via .mcp.json (Vanta/Drata creds as ${env-refs}, no live keys). HARD invariant: stamp emits 'audit-ready evidence', never 'we're compliant', and routes the auth mechanism (SAML/SCIM) to badge — never hand-rolled code (OP O2 / KP P25)."
+}
