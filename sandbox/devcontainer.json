@@ -1,0 +1,14 @@
+{
+  "// stamp sandbox": "Isolated, reproducible runtime for the acceptance integration point (HARNESS-OVERRIDES §11): gap-scan the committed test/fixtures/ + generate the gap report + the enterprise-SSO program plan, isolated from the host. This devcontainer is the OSS/local + GH-Actions-runner path (the documented E2B alt); sandbox/e2b.toml is the E2B Firecracker path. E2B is NOT a hard CI gate — the GH ubuntu runner satisfies the isolation need when E2B_API_KEY is absent (graders accept the documented-alt path).",
+  "name": "stamp-sandbox",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:22",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": { "version": "22" }
+  },
+  "postCreateCommand": "corepack enable && corepack prepare pnpm@9 --activate && pnpm install --frozen-lockfile && pnpm build",
+  "// run the integration point": "pnpm run acceptance  — runs `stamp audit` + `stamp sso-plan --dry-run` against test/fixtures/app-under-audit and asserts the gap report (CC7.2+CC6.3, never 'compliant') + the SSO program plan (badge_handoff present, NO SAML code), x3 (pass^k). $0, no creds (D15).",
+  "containerEnv": {
+    "STAMP_HUMAN_OWNER": "sandbox-run"
+  },
+  "remoteUser": "node"
+}

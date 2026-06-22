@@ -1,0 +1,11 @@
+# stamp sandbox — E2B template config (the Firecracker microVM path; default sandbox runtime).
+# E2B is NOT a hard CI gate (HARNESS-OVERRIDES §11): when E2B_API_KEY is absent the GH ubuntu
+# runner (sandbox/devcontainer.json + acceptance.yml) satisfies the isolation requirement — see
+# sandbox/README.md for the documented alt + the cold-start/break-even note.
+
+# This is a documented template descriptor (not auto-applied in CI). Provision with:
+#   e2b template build -d sandbox/e2b.Dockerfile
+template_name = "stamp-sandbox"
+dockerfile = "e2b.Dockerfile"
+# The canonical isolated run = the acceptance integration point:
+start_cmd = "cd /home/user/stamp && pnpm install --frozen-lockfile && pnpm build && pnpm run acceptance"
