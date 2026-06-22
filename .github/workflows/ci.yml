@@ -62,3 +62,28 @@ jobs:
       - name: Skeleton phase
         if: steps.rt.outputs.armed == 'false'
         run: echo "skeleton phase — build gate auto-arms when package.json lands (CP123 Wave B)"
+
+  # ── cockpit E2E (G2): Playwright drives the stdlib cockpit's ask-the-employee box ──
+  # Red-blocking. Asserts the rendered sso-plan view contains "badge" (the mechanism handoff)
+  # and the audit view does NOT claim "compliant" (the defining boundary). The playwright
+  # webServer config boots `node cockpit/server.mjs` on :7799, which shells out to the built
+  # CLI — so we build first. Chromium is installed with its OS deps.
+  cockpit-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install + build (the cockpit shells out to dist/)
+        run: |
+          pnpm install --frozen-lockfile || pnpm install
+          pnpm build
+      - name: Install Playwright chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Cockpit E2E (ask-the-employee renders the gap report + the badge handoff)
+        run: pnpm exec playwright test cockpit

@@ -28,4 +28,9 @@ dist/
 # Obsidian temp files
 vault/Untitled*.base
 
+# Playwright cockpit-E2E artifacts (regenerated each run; the spec is the source of truth)
+test-results/
+playwright-report/
+.playwright/
+
 .env
