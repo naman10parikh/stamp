@@ -1,17 +1,13 @@
-# {{AGENT_NAME}} — Memory
+# stamp — Memory (pointer)
 
-## Bootstrap (loaded every cycle)
+> The canonical bootstrap memory lives at **`memory/MEMORY.md`** (the JTBD-0 boundary one-liner, the badge seam,
+> the 5 spine stances, the DSAR/UAR clocks, and the 6 brain-file pointers). One source of truth — do not
+> duplicate it here.
 
-- Strategy: {{STRATEGY}}
-- Platform: {{PLATFORM}}
-- Created: {{DATE}}
-- Last successful scan: (updated by agent)
-- Key learnings: (appended by agent)
+The **queryable** memory layer is the compliance brain: `brain/**.md`. Search it with:
 
-## Patterns Discovered
+```
+scripts/brain-search.sh "<query>"     # BM25 ranking over brain/**.md, returns cited hits
+```
 
-(Agent appends patterns here as it learns from experience)
-
-## Errors Encountered
-
-(Agent logs errors and fixes here to prevent repetition)
+stamp remembers the compliance corpus (the six `brain/` files), not git/code history. Persona: `identity/SOUL.md`.
