@@ -25,6 +25,24 @@ jobs:
             echo "RSI engine not built yet (CP123 cluster E) — exiting green."; exit 0
           fi
           echo "engine present — deterministic RSI half runs in the next step"
+      # The engine's run-eval-pyramid step spawns eval/run.mjs, which grades the REAL compiled
+      # handlers in dist/ (auto-building via `pnpm build` if dist/ is absent). The RSI runner is a
+      # fresh checkout with no dist/, so pnpm must be on PATH and the lib built first — otherwise
+      # eval/run.mjs prints "build failed — cannot run eval" and exits 1. Mirror ci.yml's toolchain.
+      - uses: pnpm/action-setup@v4
+        if: hashFiles('workflows/rsi.workflow.js') != ''
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        if: hashFiles('workflows/rsi.workflow.js') != ''
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install + build (so the eval grades the compiled handlers)
+        if: hashFiles('workflows/rsi.workflow.js') != ''
+        run: |
+          pnpm install --frozen-lockfile || pnpm install
+          pnpm build
       - name: Run deterministic RSI engine
         # refresh-brain -> re-verify-tool-matrix -> run-eval-pyramid -> propose -> test-gate -> commit
         # ($0, tokenless). Skipped until cluster E builds the engine — keeps this workflow green (D8).
