@@ -1,7 +1,7 @@
 ---
 name: enterprise-sso-program
 description: Plan the enterprise-SSO PROGRAM (decide we need it → price it sanely → prove it). Use when someone asks "do we need SSO to close this deal?", "enterprise SSO", "SCIM", "SSO pricing", or "deprovisioning". Emits the buyer-readiness checklist + WorkOS wiring PLAN + deprovisioning-proof spec — and hands the SAML/OIDC+SCIM CODE to badge. The flagship skill (half of stamp's acceptance bar).
-trigger: "do we need SSO to close this deal", "enterprise SSO", "SCIM", "SSO pricing", "deprovisioning", "SSO tax", "run the SSO program", "enterprise readiness checklist"
+trigger: ["do we need SSO to close this deal", "enterprise SSO", "SCIM", "SSO pricing", "deprovisioning", "SSO tax", "run the SSO program", "enterprise readiness checklist"]
 ---
 
 # enterprise-sso-program

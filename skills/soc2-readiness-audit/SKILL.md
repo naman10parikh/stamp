@@ -1,7 +1,7 @@
 ---
 name: soc2-readiness-audit
 description: SOC 2 / ISO 27001 / HIPAA readiness gap-scan. Use when someone asks "will we pass SOC 2?", "which controls will fail our audit?", "are we audit-ready?", or "gap-scan this app for SOC 2". Produces a control-mapped gap report (CC6/CC7/CC8 + severity + fix) — NEVER a "you're compliant" badge.
-trigger: "will we pass SOC 2", "which controls fail", "are we audit-ready", "gap-scan for SOC2", "SOC 2 readiness", "ISO 27001 audit", "HIPAA readiness", "what will the auditor flag"
+trigger: ["will we pass SOC 2", "which controls fail", "are we audit-ready", "gap-scan for SOC2", "SOC 2 readiness", "ISO 27001 audit", "HIPAA readiness", "what will the auditor flag"]
 ---
 
 # soc2-readiness-audit

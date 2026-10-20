@@ -1,7 +1,7 @@
 ---
 name: questionnaire-from-kb
 description: Answer a security questionnaire (SIG/CAIQ/VSA) from a versioned answer-KB, and handle the pen-test tax. Use when someone mentions "security questionnaire", "SIG", "CAIQ", "VSA", "Trust Center", "pen-test", or "answer once". A Trust Center deflects inbound; a versioned KB lets you answer once and diff on renewal; AI drafts, a human SIGNS. NEVER bless an AI-only pen-test.
-trigger: "security questionnaire", "SIG", "CAIQ", "VSA", "Trust Center", "pen-test", "pentest", "answer once", "vendor security review", "we ran an AI red-team"
+trigger: ["security questionnaire", "SIG", "CAIQ", "VSA", "Trust Center", "pen-test", "pentest", "answer once", "vendor security review", "we ran an AI red-team"]
 ---
 
 # questionnaire-from-kb

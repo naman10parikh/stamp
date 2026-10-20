@@ -1,7 +1,7 @@
 ---
 name: grc-platform-advisor
 description: Recommend a GRC platform (or OSS/build) as a DECISION with the honest cost — never a feature table. Use when someone asks "which GRC platform?", "Vanta vs Drata", "should we self-host compliance?", or "which compliance OSS repo?". Vanta default; vet the auditor; verify vendor independence; check pushed_at not stars.
-trigger: "which GRC platform", "Vanta vs Drata", "Vanta or Drata", "self-host compliance", "compliance OSS", "GRC tool", "which compliance repo", "buy vs build compliance", "SafeBase", "Secureframe"
+trigger: ["which GRC platform", "Vanta vs Drata", "Vanta or Drata", "self-host compliance", "compliance OSS", "GRC tool", "which compliance repo", "buy vs build compliance", "SafeBase", "Secureframe"]
 ---
 
 # grc-platform-advisor

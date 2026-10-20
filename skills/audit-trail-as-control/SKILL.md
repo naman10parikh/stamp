@@ -1,7 +1,7 @@
 ---
 name: audit-trail-as-control
 description: Design (or check) the audit trail as a real CC7/CC6 control — tamper-EVIDENT, identity-traceable, retained, SIEM-exported. Use when someone asks "is our logging audit-ready?", "CC7", "tamper-evident", "SIEM export", or "audit log for agent actions". "We have logs" is NOT an audit trail — this skill makes the difference between passing CC7 and getting a finding.
-trigger: "is our logging audit-ready", "CC7", "tamper-evident", "tamper evident", "SIEM export", "audit log for agent actions", "audit trail", "who authorized it", "we have logs"
+trigger: ["is our logging audit-ready", "CC7", "tamper-evident", "tamper evident", "SIEM export", "audit log for agent actions", "audit trail", "who authorized it", "we have logs"]
 ---
 
 # audit-trail-as-control

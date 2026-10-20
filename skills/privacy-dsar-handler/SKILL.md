@@ -1,7 +1,7 @@
 ---
 name: privacy-dsar-handler
 description: Handle GDPR/CCPA privacy — DSARs (access/erasure), DPAs/SCCs, and residency-vs-sovereignty. Use when someone mentions "GDPR", "CCPA", "DSAR", "data subject request", "erasure", "DPA", "SCC", or "residency vs sovereignty". On the GDPR 1-month→3 / CCPA 45-day→90 clock; routes work across the subprocessor register; AI drafts, a human SIGNS.
-trigger: "GDPR", "CCPA", "DSAR", "data subject request", "erasure", "right to be forgotten", "DPA", "SCC", "residency vs sovereignty", "data residency", "EU residency", "Schrems"
+trigger: ["GDPR", "CCPA", "DSAR", "data subject request", "erasure", "right to be forgotten", "DPA", "SCC", "residency vs sovereignty", "data residency", "EU residency", "Schrems"]
 ---
 
 # privacy-dsar-handler
