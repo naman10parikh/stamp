@@ -6,7 +6,7 @@
     "cadence": "nightly",
     "steps": ["refresh-brain", "re-verify-tool-matrix", "run-eval-pyramid", "propose", "validate", "ship"]
   },
-  "selection": "performance-novelty",
+  "selection": "performance",
   "eval": {
     "rubric": "eval/grade.ts",
     "gate": "acceptance-test-green && no-regression",
