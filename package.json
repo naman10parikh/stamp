@@ -4,7 +4,8 @@
   "description": "stamp — the compliance / enterprise-readiness employee. Audit-ready evidence, assembled and proven — never a rubber stamp.",
   "type": "module",
   "bin": {
-    "stamp": "./bin/stamp"
+    "stamp": "./bin/stamp",
+    "stamp-mcp": "./dist/mcp/server.js"
   },
   "main": "./dist/cli/index.js",
   "types": "./dist/cli/index.d.ts",
@@ -21,6 +22,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
+    "prepare": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
     "eval": "node eval/run.mjs",

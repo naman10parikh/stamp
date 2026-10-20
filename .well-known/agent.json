@@ -9,7 +9,7 @@
     "url": "https://github.com/naman10parikh/stamp"
   },
   "preferredTransport": "stdio",
-  "url": "stdio://stamp",
+  "url": "https://github.com/naman10parikh/stamp",
   "endpoint": "stdio:node dist/mcp/server.js",
   "additionalInterfaces": [
     {

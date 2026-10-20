@@ -1,0 +1,17 @@
+{
+  "name": "stamp",
+  "version": "0.1.0",
+  "description": "SOC 2 readiness you can run: gap reports, audit trails and the SSO plan.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "stamp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "-p",
+        "github:naman10parikh/stamp",
+        "stamp-mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "description": "stamp's compliance-lint guard: blocks a 'we are compliant' claim before an auditor signs, an AI-only pen test presented as the SOC 2 pen test, an access revoke with no human approval, and a secret written into a file.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/.claude/hooks/compliance-lint.js\"", "timeout": 10 }
+        ]
+      }
+    ]
+  }
+}

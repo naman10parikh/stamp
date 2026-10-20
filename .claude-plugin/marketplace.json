@@ -1,0 +1,17 @@
+{
+  "name": "stamp",
+  "owner": {
+    "name": "Naman Parikh",
+    "url": "https://github.com/naman10parikh"
+  },
+  "metadata": {
+    "description": "Stamp, the compliance agent employee: SOC 2 gap reports, the enterprise SSO plan, audit trails, access reviews and privacy requests."
+  },
+  "plugins": [
+    {
+      "name": "stamp",
+      "source": "./",
+      "description": "SOC 2 readiness you can run: gap reports, audit trails and the SSO plan."
+    }
+  ]
+}
