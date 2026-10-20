@@ -17,8 +17,8 @@
 //           → commit. With --dry-run every step runs WITHOUT side effects and the engine
 // exits 0 (the CI smoke + the rsi.yml nightly cron call it with --dry-run).
 //
-// Model routing (cross-cutting): the Claude half, when it lights up, is pinned to an
-// EXPLICIT model (no bare default) — CP123 D12: every node is claude-opus-4-8[1m], max effort.
+// Model routing (cross-cutting): the Claude half, when it lights up, names its model
+// EXPLICITLY (no bare default, CP123 D12): the alias opus, max effort, never a fixed ID.
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -29,9 +29,10 @@ const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(here, "..");
 
 // EXPLICIT model for the deferred Claude half (model-routing rule: never a bare default).
-// CP123 D12 — every node runs on Opus 4.8 1M, max effort. The Claude half spawns with:
-//   model: "claude-opus-4-8[1m]"   (passed explicitly — no inherited/bare default).
-const RSI_MODEL = "claude-opus-4-8[1m]";
+// CP123 D12: every node runs on Opus, max effort. The alias moves to each new Opus by itself,
+// where a fixed ID would go stale. The Claude half spawns with:
+//   model: "opus"   (passed explicitly, no inherited or bare default).
+const RSI_MODEL = "opus";
 
 const DRY_RUN = process.argv.includes("--dry-run");
 

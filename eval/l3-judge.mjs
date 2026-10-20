@@ -9,11 +9,12 @@
 // the judge is given the rubric, it does not invent one, and the verb does not grade itself).
 //
 // NON-BLOCKING + KEY-GATED (D15): the $0/no-creds floor is L1+L2 (eval/run.mjs). This judge runs
-// ONLY when ANTHROPIC_API_KEY is set, and is ADVISORY — it never fails CI. It exists so that when
-// the key is present (local / the optional smoke), the trajectory tasks get a real judgment pass.
+// ONLY when ANTHROPIC_API_KEY and STAMP_JUDGE_MODEL are set, and is ADVISORY: it never fails CI. It
+// exists so that when both are present (local / the optional smoke), the trajectory tasks get a real
+// judgment pass.
 //
-//   ANTHROPIC_API_KEY=… node eval/l3-judge.mjs        → judge the trajectory tasks, print verdicts
-//   node eval/l3-judge.mjs                            → skip cleanly (no key), exit 0
+//   ANTHROPIC_API_KEY=… STAMP_JUDGE_MODEL=<model> node eval/l3-judge.mjs   → judge, print verdicts
+//   node eval/l3-judge.mjs                                                  → skip cleanly, exit 0
 
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -23,16 +24,18 @@ import { spawnSync } from "node:child_process";
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(here, "..");
 
-// Model: explicit, no bare default (model-routing rule; CP123 D12 — Opus 4.8 1M).
-const JUDGE_MODEL = process.env.STAMP_JUDGE_MODEL?.trim() || "claude-opus-4-8[1m]";
+// Model: the person names it in STAMP_JUDGE_MODEL. The Messages API needs a model name and stamp
+// never picks one, because a fixed ID goes stale.
+const JUDGE_MODEL = process.env.STAMP_JUDGE_MODEL?.trim();
 
 // The trajectory tasks L3 judges (PLAN §6 — the judgment ones, not the keyword ones).
 const TRAJECTORY_IDS = new Set(["G4", "G6", "G7", "G9", "G12", "G13"]);
 
 const key = process.env.ANTHROPIC_API_KEY?.trim();
 const keyUsable = !!key && !key.includes("sk-ant-...");
-if (!keyUsable) {
-  process.stdout.write("[l3-judge] skipped — no usable ANTHROPIC_API_KEY. L3 is non-blocking (D15); the L1+L2 gate (npm run eval) is the $0 floor.\n");
+if (!keyUsable || !JUDGE_MODEL) {
+  const missing = [!keyUsable && "usable ANTHROPIC_API_KEY", !JUDGE_MODEL && "STAMP_JUDGE_MODEL"].filter(Boolean).join(" and no ");
+  process.stdout.write(`[l3-judge] skipped: no ${missing}. L3 is non-blocking (D15); the L1+L2 gate (npm run eval) is the $0 floor.\n`);
   process.exit(0);
 }
 

@@ -69,7 +69,7 @@ Then run `pnpm build && pnpm test && pnpm run eval && pnpm run acceptance`. CI r
 ## Questions
 
 **Does it need an API key or cost money?**
-No. The command line, the MCP server, the tests, the eval and the acceptance test need no account and no key. One optional script, `node eval/l3-judge.mjs`, asks a Claude model to grade six judgment tasks when `ANTHROPIC_API_KEY` is set. That call costs API credit. `pnpm run eval` never calls it.
+No. The command line, the MCP server, the tests, the eval and the acceptance test need no account and no key. One optional script, `node eval/l3-judge.mjs`, asks the Claude model you name in `STAMP_JUDGE_MODEL` to grade six judgment tasks when `ANTHROPIC_API_KEY` is set too. That call costs API credit. `pnpm run eval` never calls it.
 
 **Does any data leave the machine?**
 Not in normal use. The scan reads local files, and the run trail is a local file. With `ANTHROPIC_API_KEY` set, the optional judge sends Stamp's answers and the expected resolutions to the Anthropic API. The run trail is a tracked file that records a user name, so your runs show up in `git status`. The local page from `bash scripts/serve.sh` listens on 127.0.0.1, port 7799.
