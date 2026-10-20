@@ -8,7 +8,7 @@
 // and an "ask-the-employee" box that shells out to the REAL CLI (`node bin/stamp … --json`).
 //
 // Design (mirrors the proven sentinel / talent-intel cockpit pattern, in Node):
-//   - REPO   = parent of cockpit/  →  ~/stamp.
+//   - REPO   = parent of cockpit/  →  the repository root.
 //   - STATIC = cockpit/  (only the three SPA files are served; path-traversal guarded).
 //   - Data is loaded LAZILY inside each route — a missing `dist/` (CLI not built) or a missing
 //     log file returns an honest JSON error with the right status, it NEVER crashes the boot, so
@@ -34,7 +34,7 @@ import { dirname, join, normalize, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO = join(HERE, ".."); // cockpit/ → ~/stamp
+const REPO = join(HERE, ".."); // cockpit/ → the repository root
 const PORT = Number(process.env.STAMP_COCKPIT_PORT || 7799);
 const HOST = "127.0.0.1";
 
