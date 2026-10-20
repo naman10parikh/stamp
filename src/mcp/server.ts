@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // stamp-mcp — stamp's own MCP server (Cluster C1). Exposes the 8 governance/evidence verbs
 // as MCP tools so Claude / the energy hub / sibling employees (especially badge) call them
 // natively over stdio, plus the 6 brain files as readable `stamp://brain/{file}` resources.
@@ -10,7 +11,7 @@
 // @modelcontextprotocol/sdk@1.29.0 API). No direct `zod` import — the request schemas come
 // pre-built from the SDK, so the tool inputSchemas are declared as plain JSON-Schema objects.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -286,8 +287,16 @@ export async function main(): Promise<void> {
   await server.connect(transport);
 }
 
-// Run when invoked directly (node dist/mcp/server.js).
-const invokedDirectly = process.argv[1] && normalize(process.argv[1]) === normalize(fileURLToPath(import.meta.url));
+// Run when invoked directly (node dist/mcp/server.js, or the stamp-mcp bin). npx starts a bin
+// through a symlink in node_modules/.bin, so resolve argv[1] before comparing.
+function entryPath(): string {
+  try {
+    return process.argv[1] ? realpathSync(process.argv[1]) : "";
+  } catch {
+    return process.argv[1] ?? ""; // Intentionally silent: an unresolvable argv[1] falls back to the raw path.
+  }
+}
+const invokedDirectly = entryPath() !== "" && normalize(entryPath()) === normalize(fileURLToPath(import.meta.url));
 if (invokedDirectly) {
   void main();
 }
