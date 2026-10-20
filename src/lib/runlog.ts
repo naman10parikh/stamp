@@ -46,7 +46,7 @@ export function resolveHumanOwner(): string {
  * deterministic/tokenless, so the field records the routing context, not a live call.
  */
 export function resolveModel(): string {
-  return process.env.ANTHROPIC_MODEL?.trim() || "claude-opus-4-8[1m]";
+  return process.env.ANTHROPIC_MODEL?.trim() || "default";
 }
 
 /** Append one run record to logs/runs.jsonl (append-only; creates logs/ if absent). */
