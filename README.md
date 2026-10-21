@@ -20,7 +20,7 @@ Stamp is an agent employee, a packaged specialist agent with its own skills, mem
 
 _Stamp is part of an agent-native play for agent-native systems that can eventually be recursively self-improving and evolving, operated by agent employees._
 
-<p align="center"><img alt="Stamp: on the command line" src="assets/terminal.svg" width="880"></p>
+<p align="center"><img alt="Stamp: a real task, run offline" src="assets/demo.svg" width="880"></p>
 <!-- fleet:header:end -->
 
 Stamp is for teams that sell software to companies who ask for SOC 2, single sign-on and a security review before
